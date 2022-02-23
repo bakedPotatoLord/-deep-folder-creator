@@ -1,34 +1,66 @@
 //requiring modules
-const fs = require("fs");
-const chalk = require('chalk')
+import { rm, mkdir } from "fs";
+import * as path2 from 'path' ;
+import {fileURLToPath} from 'url';
+import pkg from 'chalk';
+const {blue} = pkg
+import inquirer from 'inquirer';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path2.dirname(__filename);
+
 
 //vars used for loop
 var path = ''
 var i =0
 
-//input data here
-dirNum = 25 //number of folders inside of eachother
-dirname = '/test' //name of each folder
+var dirNum
 
-//delete dir is it already exists
-fs.rm('test', { recursive: true }, (err) => {
-    if (err) {
-        console.log(err)
-    }
+function getInput(){
+	inquirer
+	.prompt([
+		{
+		type: 'input',
+		name: 'dirNum',
+		message: 'how many folders should be inside of eachother',
+		default: 25,
+		},
+	])
+	.then((answers) => {
+		// Use user feedback for... whatever!!
+		console.log(answers)
+		dirNum = answers.dirNum //number of folders inside of eachother
+		if(typeof dirNum == 'number'){
+			deleteDir()
+		}else{
+			console.log('response musst be a number')
+			getInput()
+		}
+	});
+}
 
-    console.log(`/test is deleted!`);
 
-		//call the function to begin the loop
-		createDir()
-});
+function deleteDir(){
+	//delete dir is it already exists
+	rm('test', { recursive: true }, (err) => {
+		if (err) {
+			console.log(err)
+		}
+
+		console.log(`/test is deleted!`);
+
+			//call the function to begin the loop
+			createDir()
+	});
+}
 
 //function calls itself when it has made the new directory
 function createDir(){
-	if(i<15){
+	if(i<dirNum){
 		path+= "/test"
-		console.log(chalk.blue(i))
+		console.log(blue(i))
  
-	 	fs.mkdir(__dirname+path,(err)=>{
+	 	mkdir(__dirname+path,(err)=>{
 			if (err) {
 			return console.error(err);
 			}
@@ -40,3 +72,5 @@ function createDir(){
 	}
 }
 
+//start program
+getInput()
