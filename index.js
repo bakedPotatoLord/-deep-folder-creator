@@ -42,7 +42,7 @@ function getInput(){
 
 function deleteDir(){
 	//delete dir is it already exists
-	rm('test', { recursive: true }, (err) => {
+	rm('i', { recursive: true }, (err) => {
 		if (err) {
 			console.log(err)
 		}
@@ -57,7 +57,7 @@ function deleteDir(){
 //function calls itself when it has made the new directory
 function createDir(){
 	if(i<dirNum){
-		path+= "/test"
+		path+= "/i"
 		console.log(blue(i))
  
 	 	mkdir(__dirname+path,(err)=>{
