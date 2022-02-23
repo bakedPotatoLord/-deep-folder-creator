@@ -7,9 +7,20 @@ var path = ''
 var i =0
 
 //input data here
-dirNum = 15 //number of folders inside of eachother
+dirNum = 25 //number of folders inside of eachother
 dirname = '/test' //name of each folder
 
+//delete dir is it already exists
+fs.rm('test', { recursive: true }, (err) => {
+    if (err) {
+        console.log(err)
+    }
+
+    console.log(`/test is deleted!`);
+
+		//call the function to begin the loop
+		createDir()
+});
 
 //function calls itself when it has made the new directory
 function createDir(){
@@ -29,5 +40,3 @@ function createDir(){
 	}
 }
 
-//call the function to begin the loop
-createDir()
