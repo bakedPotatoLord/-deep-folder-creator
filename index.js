@@ -22,18 +22,18 @@ function getInput(){
 		{
 		type: 'input',
 		name: 'dirNum',
-		message: 'how many folders should be inside of eachother',
+		message: 'How many folders should be inside of eachother?',
 		default: 25,
 		},
 	])
 	.then((answers) => {
 		// Use user feedback for... whatever!!
 		console.log(answers)
-		dirNum = answers.dirNum //number of folders inside of eachother
-		if(typeof dirNum == 'number'){
+		dirNum = parseInt(answers.dirNum) //number of folders inside of eachother
+		if(!isNaN(dirNum)){
 			deleteDir()
 		}else{
-			console.log('response musst be a number')
+			console.log('response must be a number')
 			getInput()
 		}
 	});
